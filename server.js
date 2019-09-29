@@ -30,7 +30,7 @@ mongoose.connect(process.env.DB_CONNECTION,  { useNewUrlParser: true } ,() => {
 /*
 **DEFINE PORT
 */
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 
 /*
