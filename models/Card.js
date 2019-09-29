@@ -22,7 +22,7 @@ const CardSchema = mongoose.Schema({
 		type : Number,
 		defualt : 0
 	},
-	opend : {
+	opened : {
 		type : Number,
 		defualt : 0
 	},
