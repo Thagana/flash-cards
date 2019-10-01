@@ -2,11 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
+
 /*
 **IMPORT ROUTES
 */
 const cardsRoute = require('./routes/cards');
 const authRoute = require('./routes/auth');
+
 //instatiaste the app
 const app = express();
 
