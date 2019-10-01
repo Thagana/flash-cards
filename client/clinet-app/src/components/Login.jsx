@@ -1,4 +1,6 @@
 import React, { Component} from 'react';
+import { userLogin } from './functions/userLogin';
+import { Link } from 'react-router-dom';
 import './styles/login-form.css';
 
 class Login extends Component {
@@ -18,6 +20,25 @@ class Login extends Component {
     }
     onSubmit(e){
         e.preventDefault();
+        const { username, password } = this.state;
+        const user = {
+            username : username,
+            password : password
+        }
+
+        userLogin(user)
+                .then((response) => {
+                    if(response.fieldError){
+                        this.setState({ errorMessage: response.fieldError, error: true })
+                    }else if(response.userError){
+                        this.setState({ errorMessage: response.userError, error: true })
+                    }else if(response.authError){
+                        this.setState({ errorMessage: response.authError, error: true })
+                    }else{
+                        this.setState({ successMessage : response.success })
+                    }
+                })
+                .catch(error => console.log(error));
     }
 
     onChange(e){
@@ -31,18 +52,33 @@ class Login extends Component {
         return (
             <div>
             	<div className="header">
-                <div className="header-wrapper">
-                   <div className="back-btn">
-                       <i className="fa fa-arrow-left" onClick={this.onClick.bind(this)}></i>
-                   </div>
-                   <div className="header-text">
-                       <h3 className="has-text-centered" style={{ 'color': 'aqua' }}>WELCOME BACK</h3>
-                   </div>
-                </div>
+                    <h3 className="has-text-centered" style={{ 'color': 'aqua' }}>WELCOME BACK</h3>
+                    <div className="header-wrapper">
+                       <div className="back-btn" style={{ 'curser' : 'pointer' }}>
+                           <i className="fa fa-arrow-left" style={{ 'fontSize' : '20px' }} onClick={this.onClick.bind(this)}></i>
+                       </div>
+                       <div className="header-text">
+                           <div>
+                               <i className="fa fa-map-marker-alt"></i>
+                           </div>
+                       </div>
+                       <div>
+                           <p style={{ 'padding': '10px' }}>
+                                <Link to="/register" className="link">
+                                REGISTER
+                                </Link>
+                           </p>
+                       </div>
+                    </div>
                     <hr />
                 </div>
                 <div className="container form-container">
-                    <form onSubmit={this.onSubmit.bind(this)}>
+                        <div>
+                            <p className="has-text-centered">
+                                { this.state.error ? this.state.errorMessage : '' }
+                            </p>
+                        </div>
+                    <form onSubmit={this.onSubmit}>
                         <div className="field">
                             <label className="label">Username</label>
                             <input type="text"
