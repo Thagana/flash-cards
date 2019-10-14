@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
 import Cards from './Cards';
+import CardSingle from './CardsSingle';
 class Landing extends Component {
 
     render() {
@@ -10,7 +11,7 @@ class Landing extends Component {
 	            	<Navbar />
             	</div>
             	<div>
-	            	<Cards />
+	            	<CardSingle />
             	</div>
             </div>
         );
