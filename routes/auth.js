@@ -6,18 +6,18 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 
-router.post('/register',  async (req,res) => {
+router.post('/register', async (req,res) => {
 	const { error } = registerValidation(req.body);
 	if(error){
-		return res.status(400).send(error.details[0].message);	
+		return res.status(200).json({ fieldError: error.details[0].message });	
 	}
 
 	const user = await User.findOne({ email: req.body.email })
 
 	if(user){
-		res.json({'user ':'already exist'}).status(400);
+		res.json({  userError :'already exist'}).status(200);
 	}
-	const salt = await bcrypt.genSalt(10);
+	const salt = bcrypt.genSalt(10);
 	const hashedPassword = await bcrypt.hash(req.body.password, salt);
 	try{
 		const newUser = new User({
@@ -26,32 +26,31 @@ router.post('/register',  async (req,res) => {
 			email : req.body.email
 		});
 		const result = newUser.save(); 
-		res.json({"message":"user successfuly created"}).status(201);
+		res.json({ success :"user successfuly created"}).status(201);
 	}catch(error){
-		res.send(error).status(400);
+		res.send(error).status(500);
 	}
 });
 
 
 router.post('/login', async  (req, res) => {
 	try{
-		const { error } = loginValidation(req.body);
-		if(error){
-			return res.status(400).send(error.details[0].message);
-		}
+
+		/* Query the data for existing users */
 		const user = await User.findOne({ username : req.body.username}).exec();
 
+		/* If there aren't any user is means  */
 		if(!user){
-			return res.json({"message":"username or password incorrect"}).status(404)
+			return res.json({ userError :"username or password incorrect"}).status(200)
 		}
 
 		const checkhashedPassword = await bcrypt.compare(req.body.password, user.password);
 
 		if(!checkhashedPassword){
-			return res.json({"message":"username or password incorrect!"}).status(404)
+			return res.json({ authError :"username or password incorrect!"}).status(200)
 		}
 		const token = jwt.sign({ _id: user.id },process.env.TOKEN_SECRET);
-		res.json({"data":{"token": token,"message":"loggedin"}})
+		res.json({ data :{"token": token,"message":"loggedin"}}).status(200);
 
 	}catch(error){
 		res.send(error).status(500)
