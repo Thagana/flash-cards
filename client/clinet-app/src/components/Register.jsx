@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { registerUser } from './functions/registerUser';
 
 class Register extends Component {
-  
+
     constructor(props) {
         super(props);
         this.state = {
@@ -14,11 +14,17 @@ class Register extends Component {
           error: false,
           errorMessage: '',
         	hasCorrectLenght: false,
-        	isActiveTyping: false
+        	isActiveTyping: false,
+          isLoading: false
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+
+    onChange(e){
+        this.setState({[e.target.name] : e.target.value})
+    }
+
     onSubmit(e){
         e.preventDefault();
         const { username , email, password } = this.state;
@@ -28,25 +34,27 @@ class Register extends Component {
           email: email
         };
 
+        this.setState({ isLoading: true })
         registerUser(user)
                     .then((response) => {
-                      if(response.fieldError){
-                        this.setState({ error: true, errorMessage : response.fieldError })
-                      }else if(response.userError){
-                        this.setState({ error: true, errorMessage: response.userError })
-                      }else if(response.success){
-                        this.setState({  error: true, errorMessage: response.success })
-                      }else{
-                        this.setState({ error: true, errorMessage: 'Something went wrong!' })
+                      console.log(response);
+                      if(response.error){
+                        if(response.error.userError){
+                          this.setState({ error: true, errorMessage: response.error.userError })
+                        }
+                        if(response.error.fieldError){
+                          this.setState({ error: true, errorMessage: response.error.fieldError })
+                        }
+                      }
+                      if(response.success){
+                        this.setState({ error: false, isLoading: false })
+                        this.props.history.push(`/login`)
                       }
                     }).catch((error) => {
                       console.log(error);
                     })
     }
 
-    onChange(e){
-        this.setState({[e.target.name] : e.target.value})
-    }
     onClick(){
         this.props.history.push(`/`)
     }
@@ -76,6 +84,11 @@ class Register extends Component {
               </div>
                <div className="container form-container">
                    <form onSubmit={this.onSubmit}>
+                       <div>
+                           <p className="has-text-centered" style={{ 'fontWeight': 'bold', 'color': 'red' }}>
+                               { this.state.error ? this.state.errorMessage : '' }
+                           </p>
+                       </div>
                        <div className="field">
                            <label className="label">Username</label>
                            <input type="text"
@@ -84,16 +97,18 @@ class Register extends Component {
                                     onChange={this.onChange}
                                     className="input"
                                     placeholder="Username"
+                                    required={true}
                              />
                        </div>
                        <div className="field">
                            <label className="label">Email</label>
-                           <input type="text"
+                           <input type="eamil"
                                     name="email"
                                     value={this.state.email}
                                     onChange={this.onChange}
                                     className="input"
                                     placeholder="Username"
+                                    required={true}
                              />
                        </div>
                        <div className="filed">
@@ -104,6 +119,7 @@ class Register extends Component {
                                    onChange={this.onChange}
                                    className="input"
                                    placeholder="Password"
+                                   required={true}
                                    />
                        </div>
                       
