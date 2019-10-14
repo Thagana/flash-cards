@@ -1,5 +1,7 @@
 import React from 'react';
 import Card from './Card';
+import { getAllCards } from './functions/getAllcards';
+import { Redirect } from 'react-router-dom';
 
 class Component extends React.Component {
 
@@ -47,6 +49,16 @@ class Component extends React.Component {
 
     }
 
+    componentDidMount() {
+		getAllCards()
+				.then((response) => {
+					// console.log(response);
+					if(response.data.message === "Access Denied"){
+						this.props.push(`/login`);
+					}
+				})
+				.catch(error => console.log(error));
+    }
     render() {
     	const { data, isLoading } = this.state;
         return (
