@@ -4,6 +4,9 @@ import moment from 'moment';
 class Card extends React.Component {
 
     render() {
+    	const cardState = this.props.showFront ? 
+    					(<div className="content">{ this.props.cardFront }</div>) : 
+    					(<div className="content">{ this.props.cardBack }</div>)
         return (
 	        	<div className="card">
 		        	  <header className="card-header">
@@ -18,9 +21,7 @@ class Card extends React.Component {
 		        	    </a>
 		        	  </header>
 		        	  <div className="card-content">
-		        	    <div className="content">
-		        	      { this.props.cardFront }
-		        	    </div>
+		        	  { cardState }
 		        	  </div>
 		        	  <footer className="card-footer">
 		        	    <a href="#" className="card-footer-item">Rate</a>
