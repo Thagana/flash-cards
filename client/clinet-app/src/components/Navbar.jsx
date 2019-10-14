@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import AddCard from './AddCard';
+import { Authentication } from './functions/authentication';
+import SuccessFeedBack from './Animations/SuccessFeedBack';
 import './styles/navbar.css';
 
 class Navbar extends Component {
@@ -23,6 +25,16 @@ class Navbar extends Component {
                   modal.classList.remove('is-active');
             }
       }
+
+      logOut(e){
+        e.preventDefault();
+        Authentication.signout(() => {
+            localStorage.clear();
+            this.props.history.push(`/login`)
+        })
+      }
+
+
 
     render() {
         return (
@@ -56,7 +68,7 @@ class Navbar extends Component {
             	      <Link className="nav-item is-tab is-active" to="/profile">
             	        <span className="icon"><i className="fa fa-user"></i></span>
             	      </Link>
-            	      <a className="nav-item is-tab" href="#">
+            	      <a className="nav-item is-tab" href="#" onClick={this.logOut.bind(this)}>
             	        <span className="icon"><i className="fa fa-sign-out"></i></span>
             	      </a>
             	    </div>
@@ -69,7 +81,7 @@ class Navbar extends Component {
             	    <p className="menu-label is-hidden-touch">Navigation</p>
             	    <ul className="menu-list">
             	      <li>
-            	        <a href="#" className="">
+            	        <a href="#" className="" onClick={this.showModal.bind(this)}>
             	          <span className="icon"><i className="fa fa-plus" aria-hidden="true"></i></span> Add Card
             	        </a>
             	      </li>
