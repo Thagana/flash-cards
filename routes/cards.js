@@ -3,6 +3,7 @@
 */
 const express = require('express');
 const Card = require('../models/Card');
+const auth = require('./verfyToken');
 
 /*
 *INSTATIATE THE ROUTER
@@ -11,15 +12,9 @@ const router = express.Router();
 
 
 /*
-**DEFINE ROUTES
-**
-*/
-
-
-/*
 **type GET route : returns all cards json object
 */
-router.get('/', async (req, res) => {
+router.get('/',auth, async (req, res) => {
 	try{
 		const cards = await Card.find().exec();
 		res.json(cards);
@@ -34,7 +29,7 @@ router.get('/', async (req, res) => {
 ** & request vars => title, question, answer
 ** & returns posted card json object
 */
-router.post('/', async (req, res) => {
+router.post('/',auth,  async (req, res) => {
 	try{
 		const card = new Card({
 			title : req.body.title,
@@ -55,7 +50,7 @@ router.post('/', async (req, res) => {
 **& vars
 **
 */
-router.put('/:id', async (req,res) => {
+router.put('/:id', auth, async (req,res) => {
 	try{
 		const card = await Card.updateOne({_id : req.params.id}, {$set : {
 			title : req.body.title,
@@ -79,7 +74,7 @@ router.put('/:id', async (req,res) => {
 **& vars _id object id
 **& returns the specific object
 */
-router.get('/:id', async (req, res) => {
+router.get('/:id',auth,  async (req, res) => {
 	try{
 		const card = await Card.findById(req.params.id).exec();
 		res.json(card).status(200);
@@ -93,7 +88,7 @@ router.get('/:id', async (req, res) => {
 **& vars id
 **& returns message with status 200
 */
-router.delete('/:id', async (req,res) => {
+router.delete('/:id',auth, async (req,res) => {
 	try{
 		const result = await Card.deleteOne({ _id : req.params.id }).exec();
 		res.json({'message':'card removed successfuly'}).status(200);
