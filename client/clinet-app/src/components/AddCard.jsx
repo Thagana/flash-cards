@@ -12,10 +12,16 @@ class AddCard extends Component {
 	  };
 	}
 	onSubmit(e){
-
+		e.preventDefault();
+		const { title, front, back } = this.state;
+		const card = {
+			title: title,
+			front: front,
+			back: back
+		}
 	}
 	onChange(e){
-
+		this.seState({ [e.target.name ] : e.target.value });
 	}
     render() {
         return (
@@ -28,6 +34,7 @@ class AddCard extends Component {
 								 value={this.state.title}
 								 onChange={this.onChange.bind(this)}
 								 className="input"
+								 required={true}
 						  />
 					</div>
 					<div>
@@ -37,6 +44,7 @@ class AddCard extends Component {
 								value={this.state.front}
 								onChange={this.onChange.bind(this)}
 								className="input"
+								required={true}
 								/>
 					</div>
 					<div>
@@ -45,6 +53,7 @@ class AddCard extends Component {
 								  value={this.state.back}
 								  onChange={this.onChange.bind(this)}
 								  className="textarea"
+								  required={true}
 								  />
 					</div>
 					<div className="button-container">
