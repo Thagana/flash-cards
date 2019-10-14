@@ -7,19 +7,19 @@ export const userLogin = (user) => {
 		password: user.password
 	})
 	.then((response) => {
-		console.log(response);
+		// console.log(response);
 		if(response.status === 200){
-			if(response.data.fieldError){
-				return { 'fieldError' : response.data.fieldError }
-			}else if(response.data.userError){
-				return { 'userError' : response.data.userError }
-			}else if(response.data.authError){
-				return { 'authError' : response.data.authError }
-			}else{
-				return { 'success' : response.data.data.message }
+			if(response.data.userError){
+				return { userError : response.data.userError }
+			}
+			if(response.data.authError){
+				return { authError : response.data.authError }
+			}
+			if(response.data.data.message){
+				return { success : { message: response.data.data.message, token: response.data.data.token} }
 			}
 		}else{
-			return { 'error' : 'Something went wrong!'}
+			return { error : 'Something went wrong!'}
 		}
 	})
 	.catch(error => console.log(error))
