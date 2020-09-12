@@ -24,7 +24,7 @@ app.use('/api/v1/users', authRoute);
 /*
 **CONNECT TO DATABASE
 */
-mongoose.connect(process.env.DB_CONNECTION,  { useNewUrlParser: true } ,() => {
+mongoose.connect(process.env.DB_CONNECTION,  { useNewUrlParser: true, useUnifiedTopology: true } ,() => {
 	console.log('Connect to database');
 })
 
@@ -39,5 +39,5 @@ const PORT = process.env.PORT || 4000;
 **LISTEN ON THE PORT
 */
 app.listen(PORT, () => {
-	console.log(`Server is running on port : ${PORT}`);
+	console.log(`Server is running on port http://localhost:${PORT}`);
 })

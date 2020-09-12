@@ -1,9 +1,9 @@
 import React from 'react';
-import Landing from './components/Landing';
-import Login from './components/Login';
-import Register from './components/Register';
-import { Authentication } from './components/functions/authentication';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+import Landing from './views/Landing';
+import Login from './views/Auth/SignIn';
+import Register from './views/Auth/SignUp';
+import { Authentication } from './functions/authentication';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

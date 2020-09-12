@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import { getAllCards } from './functions/getAllcards';
+import { getAllCards } from '../functions/getAllcards';
 import { Redirect } from 'react-router-dom';
 
 class Component extends React.Component {

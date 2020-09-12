@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import AddCard from './AddCard';
-import { Authentication } from './functions/authentication';
-import SuccessFeedBack from './Animations/SuccessFeedBack';
+import { Authentication } from '../functions/authentication';
 import './styles/navbar.css';
 
 class Navbar extends Component {
