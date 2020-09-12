@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Big+Shoulders+Display&display=swap');
+@import url('../node_modules/bulma/css/bulma.css');
+body {
+  margin: 0;
+  font-family: 'Big Shoulders Display', cursive;
+}
+
