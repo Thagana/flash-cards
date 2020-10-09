@@ -1,9 +1,9 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { Button, View, Text } from 'react-native';
+
 import HomeScreeStack from './HomeRoute';
 import CardsScreen from './CardsRoutes';
-
+import AddCardRoute from './AddCardRoute'
 import Options from '../components/HeaderLeft';
 import Title from '../components/Title'
 
@@ -20,6 +20,7 @@ export default function RootStackScreen() {
                         headerTitle: () => (<Title />)
                   }}/>
            <RootStack.Screen name="Cards" component={CardsScreen} />
+           <RootStack.Screen name="Add Card" component={AddCardRoute} />
        </RootStack.Navigator>
     )
 }
