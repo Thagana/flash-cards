@@ -8,10 +8,11 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         padding: 10,
-        backgroundColor: '#c6d8f5',
+        backgroundColor: '#fff',
         margin: 10,
         borderRadius: 10,
-        width: width - 18
+        width: width - 18,
+        elevation: 5,
     },
     imageConatiner: {
         padding: 5
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     title: {
         paddingHorizontal: 10,
         fontFamily: 'SansitaSwashed-Bold',
-        fontSize: 30,
+        fontSize: 20,
         color: '#000'
     },
     cartigory: {

@@ -3,44 +3,34 @@ import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import styles from './CardsList.style';
 
 export default function CardsList({props}) {
+
     const data = [
         {
             id: '1',
-            title: 'Test One',
-            cartigory: "mathematics",
+            title: 'How To make Pancakes',
+            cartigory: "baking",
             image: require('../../assets/icons/image_1.jpg')
         },
         {
             id: '2',
-            title: 'Test One',
-            cartigory: "mathematics",
+            title: 'How to dance amapiano music',
+            cartigory: "dancing",
             image: require('../../assets/icons/image_2.jpg')
         },
         {
             id: '3',
-            title: 'Test One',
-            cartigory: "mathematics",
+            title: 'How to Belly dance',
+            cartigory: "dancing",
             image: require('../../assets/icons/image_3.jpg')
         },
-        {
-            id: '4',
-            title: 'Test One',
-            cartigory: "mathematics",
-            image: require('../../assets/icons/image_4.jpg')
-        },
-        {
-            id: '5',
-            title: 'Test One',
-            cartigory: "mathematics",
-            image: require('../../assets/icons/image_4.jpg')
-        },
-        {
-            id: '6',
-            title: 'Test One',
-            cartigory: "mathematics",
-            image: require('../../assets/icons/image_4.jpg')
-        }
     ];
+    function trim(text){
+        if(text.length > 20){
+            return text.substr(0, 20 - 1) + ' ...';
+        }
+        return text;
+    }
+
     function Card({ item }) {
         const { image, title, cartigory } = item;
         return (
@@ -50,13 +40,13 @@ export default function CardsList({props}) {
                 </View>
                 <View>
                     <View>
-                        <Text style={styles.title}>
-                            {title}
+                        <Text style={styles.title} numberOfLines={1}>
+                            {trim(title)}
                         </Text>
                     </View>
                     <View>
                         <Text style={styles.cartigory}>
-                            {cartigory}
+                            {`@${cartigory}`}
                         </Text>
                     </View>
                 </View>
