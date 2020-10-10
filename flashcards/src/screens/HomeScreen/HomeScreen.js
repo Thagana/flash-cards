@@ -30,7 +30,7 @@ export default function HomeScreen(props) {
     return (
         <View style={styles.container}>
             <CardsList props={props} cards={cards} />
-            <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('Add Card')}>
+            <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('Add Card')} activeOpacity={0.8}>
                 <Ionicons name="add" size={30} color="#fff" />
             </TouchableOpacity>
         </View>
