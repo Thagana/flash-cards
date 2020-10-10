@@ -2,28 +2,28 @@ import React from 'react'
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import styles from './CardsList.style';
 
-export default function CardsList({props}) {
-
-    const data = [
-        {
-            id: '1',
-            title: 'How To make Pancakes',
-            cartigory: "baking",
-            image: require('../../assets/icons/image_1.jpg')
-        },
-        {
-            id: '2',
-            title: 'How to dance amapiano music',
-            cartigory: "dancing",
-            image: require('../../assets/icons/image_2.jpg')
-        },
-        {
-            id: '3',
-            title: 'How to Belly dance',
-            cartigory: "dancing",
-            image: require('../../assets/icons/image_3.jpg')
-        },
-    ];
+export default function CardsList({props, cards}) {
+    console.log(cards);
+    // const data = [
+    //     {
+    //         id: '1',
+    //         title: 'How To make Pancakes',
+    //         cartigory: "baking",
+    //         image: require('../../assets/icons/image_1.jpg')
+    //     },
+    //     {
+    //         id: '2',
+    //         title: 'How to dance amapiano music',
+    //         cartigory: "dancing",
+    //         image: require('../../assets/icons/image_2.jpg')
+    //     },
+    //     {
+    //         id: '3',
+    //         title: 'How to Belly dance',
+    //         cartigory: "dancing",
+    //         image: require('../../assets/icons/image_3.jpg')
+    //     },
+    // ];
     function trim(text){
         if(text.length > 20){
             return text.substr(0, 20 - 1) + ' ...';
@@ -32,11 +32,17 @@ export default function CardsList({props}) {
     }
 
     function Card({ item }) {
-        const { image, title, cartigory } = item;
+        const { imageSrc, title, cartigory } = item;
         return (
             <TouchableOpacity style={styles.cardContainer} onPress={() => {  props.navigation.navigate('Cards')  }}>
                 <View style={styles.imageConatiner}>
-                    <Image source={image} style={styles.image}/>
+                    {
+                        imageSrc ? (
+                            <Image source={{ uri: imageSrc }} style={styles.image}/>
+                        ): (
+                            <Image source={require('../../assets/icons/image_1.jpg')} style={styles.image}/>
+                        )
+                    }
                 </View>
                 <View>
                     <View>
@@ -59,9 +65,9 @@ export default function CardsList({props}) {
             alignItems: "center"
         }}>
             <FlatList
-                data={data}
+                data={cards}
                 renderItem={Card}
-                keyExtractor={(data, index) => data.id}
+                keyExtractor={(data, index) => index.toString()}
             />
         </View>
     )
