@@ -3,27 +3,7 @@ import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import styles from './CardsList.style';
 
 export default function CardsList({props, cards}) {
-    console.log(cards);
-    // const data = [
-    //     {
-    //         id: '1',
-    //         title: 'How To make Pancakes',
-    //         cartigory: "baking",
-    //         image: require('../../assets/icons/image_1.jpg')
-    //     },
-    //     {
-    //         id: '2',
-    //         title: 'How to dance amapiano music',
-    //         cartigory: "dancing",
-    //         image: require('../../assets/icons/image_2.jpg')
-    //     },
-    //     {
-    //         id: '3',
-    //         title: 'How to Belly dance',
-    //         cartigory: "dancing",
-    //         image: require('../../assets/icons/image_3.jpg')
-    //     },
-    // ];
+
     function trim(text){
         if(text.length > 20){
             return text.substr(0, 20 - 1) + ' ...';
