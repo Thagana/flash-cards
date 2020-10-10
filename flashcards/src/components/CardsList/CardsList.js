@@ -12,9 +12,9 @@ export default function CardsList({props, cards}) {
     }
 
     function Card({ item }) {
-        const { imageSrc, title, cartigory } = item;
+        const { imageSrc, title, cartigory, content } = item;
         return (
-            <TouchableOpacity style={styles.cardContainer} onPress={() => {  props.navigation.navigate('Cards')  }}>
+            <TouchableOpacity style={styles.cardContainer} onPress={() => {  props.navigation.navigate('Cards', { cards: content })  }} activeOpacity={0.8} >
                 <View style={styles.imageConatiner}>
                     {
                         imageSrc ? (
