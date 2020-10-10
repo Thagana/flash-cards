@@ -3,24 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import Swiper from 'react-native-deck-swiper'
 
 export default function Cards() {
-    const cardRef = React.useRef(null)
-    const cards = [
-        {
-            id: '1',
-            front: 'Hello',
-            back: 'world'
-        },
-        {
-            id: '2',
-            front: 'Hello',
-            back: 'world'
-        },
-        {
-            id: '3',
-            front: 'Hello',
-            back: 'world'
-        },
-    ]
     return (
         <View style={{
             flex: 1,

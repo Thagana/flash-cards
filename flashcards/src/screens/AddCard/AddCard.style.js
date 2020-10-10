@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -37,6 +37,23 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         fontFamily: 'SansitaSwashed-Light'
+    },
+    cameraIcon: {
+        padding: 6
+    },
+    imageDisplay : {
+        flexDirection: 'row',
+        justifyContent: "center",
+        alignItems: "center",
+        borderColor: '#9B9B9B',
+        borderWidth: 1 / PixelRatio.get(),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    image: {
+        borderRadius: 75,
+        width: 150,
+        height: 150,
     }
 });
 
