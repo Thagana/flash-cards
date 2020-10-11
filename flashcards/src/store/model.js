@@ -1,20 +1,22 @@
 import { action } from 'easy-peasy'
 
-export default {
-    firstComplete: false,
-    hasSecondContent: false,
-    savePressed: false,
-    handleSaveCard: action(state => {
-        state.savePressed = true;
+export default{
+    cards: [],
+    setCards: action((state, payload) => {
+        state.cards = payload;
     }),
     content: [],
     setContent: action((state, payload) => {
         state.content = payload;
     }),
-    setHasSecondContent: action((state, payload) => {
-        state.hasSecondContent = payload;
+    modalOpen: false,
+    setModalOpen: action((state) => {
+        state.modalOpen = true
     }),
-    setFirstComplate: action((state) => {
-        state.firstComplete = true;
+    closeModal: action((state) => {
+        state.modalOpen = false;
+    }),
+    deleteCard: action((state, payload) => {
+        state.cards = payload;
     })
 }
