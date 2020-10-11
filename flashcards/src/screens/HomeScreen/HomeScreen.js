@@ -9,22 +9,28 @@ export default function HomeScreen(props) {
     const [cards, setCards] = React.useState([]);
     const getCards = async () => {
         try {
-            const value = await AsyncStorage.getItem('cards');
+            const value = await AsyncStorage.getItem('data');
             if(value !== null) {
-              console.log(value);
+              const parsed = JSON.parse(value);
+              setCards(parsed);
             }
           } catch(e) {
             console.log(e);
           }
     }
+    function clearAllData() {
+        AsyncStorage.getAllKeys()
+            .then(keys => AsyncStorage.multiRemove(keys))
+            .then(() => alert('success'));
+    }
     React.useEffect(() => {
         getCards()
-    },[getCards()]);
+    },[]);
     
     return (
         <View style={styles.container}>
-            <CardsList props={props}/>
-            <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('Add Card')}>
+            <CardsList props={props} cards={cards} />
+            <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('Add Card')} activeOpacity={0.8}>
                 <Ionicons name="add" size={30} color="#fff" />
             </TouchableOpacity>
         </View>

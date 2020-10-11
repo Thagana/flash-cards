@@ -1,13 +1,16 @@
 import React from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
-import styles from './AddCard.style';
+import ImagePicker from 'react-native-image-picker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useStoreActions } from 'easy-peasy';
 
+import styles from './AddCard.style';
 export default function AddCard(props) {
     const [title, setTitle] = React.useState('');
     const [cartigory, setCartigory] = React.useState('');
-    const [body, setBody] = React.useState('');
+    const [imageSrc, setImageSrc] = React.useState(null);
+    const setFirstComplate = useStoreActions((action) => action.setFirstComplate);
 
     const handleTitleChange = (value) => {
         setTitle(value.nativeEvent.text);
@@ -15,42 +18,36 @@ export default function AddCard(props) {
     const handleCartogoryChange = (value) => {
         setCartigory(value.nativeEvent.text);
     }
-    const handleBodyChange = (value) => {
-        setBody(value.nativeEvent.text);
+    const handleSelectImage = () => {
+        const options = {
+            quality: 1.0,
+            maxWidth: 500,
+            maxHeight: 500,
+            storageOptions: {
+              skipBackup: true,
+            },
+          };
+          ImagePicker.showImagePicker(options, response => {
+      
+            if (response.didCancel) {
+              console.log('User cancelled photo picker');
+            } else if (response.error) {
+              console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+            } else {
+                let source = { uri: 'data:image/jpeg;base64,' + response.data };
+                setImageSrc(source.uri);
+            }
+          });
     }
 
-    const setItem = async (value) => {
+
+    const next = async () => {
         try {
-            const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem('cards', jsonValue);
-            props.navigation.navigate('Home')
-          } catch (e) {
-            console.log(e)
-          }
-    }
-    const getItem = async () => {
-        try {
-            const cards = await AsyncStorage.getItem('data');
-            if (cards !== null){
-                return JSON.parse(cards);
-            }
-            return [];
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    const add = async () => {
-        try {
-            if(!title || !cartigory || !body) return;
-            const value = {
-                title,
-                cartigory,
-                body
-            }
-            const valueArray = await getItem();
-            const placeholder = [...valueArray];
-            placeholder.push(value)
-            await setItem(placeholder);
+            if(!title || !cartigory) return;
+            setFirstComplate();
+            props.navigation.navigate('Card Body', { title, cartigory, imageSrc })
         } catch (error) {
             console.log(error);
         }
@@ -62,6 +59,9 @@ export default function AddCard(props) {
                 <Text style={styles.header}>
                     Add Card
                 </Text>
+            </View>
+            <View style={[styles.image, styles.imageDisplay, {  marginBottom: 20 }]}>
+                { imageSrc !== null && <Image source={{ uri: imageSrc}} style={styles.image}/>}
             </View>
             <View style={styles.from}>
                 <View>
@@ -80,18 +80,15 @@ export default function AddCard(props) {
                         placeholder="Cartigory"
                     />
                 </View>
-                <View>
-                    <TextInput
-                        style={styles.textInput}
-                        value={body}
-                        onChange={handleBodyChange}
-                        placeholder="Body"
-                    />
+                <View style={styles.cameraIcon}>
+                    <TouchableOpacity onPress={handleSelectImage} activeOpacity={0.8}>
+                         <Ionicons name="md-camera-outline" size={30} color="#000" />
+                    </TouchableOpacity>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={add} style={styles.button} activeOpacity={0.8}>
+                    <TouchableOpacity onPress={next} style={styles.button} activeOpacity={0.8}>
                         <View>
-                            <Text style={styles.text}>Add</Text>
+                            <Text style={styles.text}>Next</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

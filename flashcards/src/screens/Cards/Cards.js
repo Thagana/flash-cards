@@ -2,31 +2,19 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import Swiper from 'react-native-deck-swiper'
 
-export default function Cards() {
-    const cardRef = React.useRef(null)
-    const cards = [
-        {
-            id: '1',
-            front: 'Hello',
-            back: 'world'
-        },
-        {
-            id: '2',
-            front: 'Hello',
-            back: 'world'
-        },
-        {
-            id: '3',
-            front: 'Hello',
-            back: 'world'
-        },
-    ]
+export default function Cards({ route, navigation }) {
+    const [data, setData] = React.useState(() => {
+        const { cards } = route.params
+        return cards;
+    })
     return (
         <View style={{
             flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
         }}>
                 <Swiper
-                    cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
+                    cards={data}
                     renderCard={(card) => {
                         return (
                             <View style={styles.card}>
@@ -35,7 +23,7 @@ export default function Cards() {
                         )
                     }}
                     onSwiped={(cardIndex) => {console.log(cardIndex)}}
-                    onSwipedAll={() => {console.log('onSwipedAll')}}
+                    onSwipedAll={() => { navigation.navigate('Home') }}
                     cardIndex={0}
                     backgroundColor={'#fff'}
                     stackSize= {3}>
