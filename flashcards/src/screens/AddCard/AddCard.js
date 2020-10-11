@@ -3,14 +3,12 @@ import { View, Text, TextInput, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useStoreActions } from 'easy-peasy';
 
 import styles from './AddCard.style';
 export default function AddCard(props) {
     const [title, setTitle] = React.useState('');
     const [cartigory, setCartigory] = React.useState('');
     const [imageSrc, setImageSrc] = React.useState(null);
-    const setFirstComplate = useStoreActions((action) => action.setFirstComplate);
 
     const handleTitleChange = (value) => {
         setTitle(value.nativeEvent.text);
@@ -46,7 +44,6 @@ export default function AddCard(props) {
     const next = async () => {
         try {
             if(!title || !cartigory) return;
-            setFirstComplate();
             props.navigation.navigate('Card Body', { title, cartigory, imageSrc })
         } catch (error) {
             console.log(error);

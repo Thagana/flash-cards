@@ -1,7 +1,7 @@
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import React from 'react'
 import { View,  Platform, KeyboardAvoidingView } from 'react-native'
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import styles from './CardBody.style';
@@ -11,33 +11,19 @@ export default function CardBody({ route, navigation }) {
     const [body, setBody] = React.useState('');
     const [content, setContent] = React.useState([])
 
+    const cards = useStoreState((state) => state.cards);
+    const setCards = useStoreActions((action) => action.setCards);
+
     const handleChange = (value) => {
         setBody(value.nativeEvent.text)
     }
+
     const add = () => {
         const placeholder = [...content, body];
         setContent(placeholder);
         setBody('');
     }
-    const setItem = async (value) => {
-        try {
-            const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem('data', jsonValue);
-          } catch (e) {
-            console.log(e)
-          }
-    }
-    const getItem = async () => {
-        try {
-            const cards = await AsyncStorage.getItem('data');
-            if (cards !== null){
-                return JSON.parse(cards);
-            }
-            return [];
-        } catch (error) {
-            console.log(error);
-        }
-    }
+
     const save = async () => {
         if(content.length === 0) return;
         
@@ -49,10 +35,9 @@ export default function CardBody({ route, navigation }) {
             cartigory: cartigoryTrim,
             content,
         }
-        const data = await getItem();
-        console.log(data);
-        const placeholder = [...data, meta]
-        await setItem(placeholder);
+
+        const placeholder = [...cards, meta]
+        setCards(placeholder);
         navigation.navigate("Home");
     }
     return (

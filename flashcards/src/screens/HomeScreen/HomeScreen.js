@@ -1,32 +1,16 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import AsyncStorage from '@react-native-community/async-storage';
 import  styles  from './HomeScreen.style';
 import CardsList from '../../components/CardsList';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 export default function HomeScreen(props) {
+    const data = useStoreState((state) => state.cards);
     const [cards, setCards] = React.useState([]);
-    const getCards = async () => {
-        try {
-            const value = await AsyncStorage.getItem('data');
-            if(value !== null) {
-              const parsed = JSON.parse(value);
-              setCards(parsed);
-            }
-          } catch(e) {
-            console.log(e);
-          }
-    }
-    function clearAllData() {
-        AsyncStorage.getAllKeys()
-            .then(keys => AsyncStorage.multiRemove(keys))
-            .then(() => alert('success'));
-    }
     React.useEffect(() => {
-        getCards()
-    },[]);
-    
+        setCards(data)
+    },[data])
     return (
         <View style={styles.container}>
             <CardsList props={props} cards={cards} />
