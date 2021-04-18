@@ -1,19 +1,22 @@
-import React from 'react';
+import * as React from 'react';
+import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStore, StoreProvider as Provider} from 'easy-peasy';
-
-import Store from './store/model';
+import {useStoreRehydrated} from 'easy-peasy';
 
 import Routes from './routes/Routes';
 
-const store = createStore(Store);
-
 export default function RootConatiner() {
-  return (
-    <Provider store={store}>
+  const isRehydrated = useStoreRehydrated();
+  if (isRehydrated) {
+    return (
       <NavigationContainer>
         <Routes />
       </NavigationContainer>
-    </Provider>
+    );
+  }
+  return (
+    <View>
+      <Text>Loading ...</Text>
+    </View>
   );
 }
